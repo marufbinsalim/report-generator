@@ -1,4 +1,4 @@
-import { Slate, Editable, useSlate } from "slate-react";
+import { Slate, Editable } from "slate-react";
 
 import { INITIAL_VALUE } from "./data/CONSTANTS/editor_initial_value";
 import { useEditorSetup } from "./hooks/useEditorSetup";

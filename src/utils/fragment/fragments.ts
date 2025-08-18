@@ -1,4 +1,4 @@
-import { Descendant, Editor, Transforms } from "slate";
+import { Editor, Transforms } from "slate";
 import { CustomElementType, CustomTextType } from "../../assets/editorTypes";
 const SLATE_FRAGMENT_PREFIX = "SLATE-FRAGMENT:";
 

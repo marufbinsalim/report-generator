@@ -1,4 +1,3 @@
-import { Descendant } from "slate";
 import { CustomElementType } from "../../assets/editorTypes";
 
 const INITIAL_VALUE = [
