@@ -2,44 +2,55 @@ import { Descendant } from "slate";
 import { CustomTextType, TaskElementType } from "../../assets/editorTypes";
 
 /**
- * Convert an array of TaskElementType to clean Markdown for a dev report
+ * Convert an array of TaskElementType to a polished Markdown dev report
  */
 export function parseTasksToMarkdown(tasks: Descendant[]): string {
   const convertableTasks = tasks as TaskElementType[];
 
-  return convertableTasks
-    .map((task) => {
-      // Combine children text
-      const lines = task.children.map((child: CustomTextType) => {
-        let text = child.text;
+  const now = new Date();
+  const formattedDate = now.toLocaleString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-        // Apply bold formatting
-        if (child.bold) {
-          text = `**${text}**`;
-        }
+  // Header for the report
+  let markdown = `# Development Task Report\n*Generated on: ${formattedDate}*\n\n`;
 
-        return text;
-      });
+  convertableTasks.forEach((task, index) => {
+    // Combine children text
+    const lines = task.children.map((child: CustomTextType) => {
+      let text = child.text;
+      if (child.bold) text = `**${text}**`;
+      return text;
+    });
 
-      if (lines.length === 0) return "";
+    const title = lines[0] ? `### ${lines[0]}` : "### Untitled Task";
 
-      // First line as heading (task title)
-      const title = `## ${lines[0]}`;
+    const descriptionLines = lines.slice(1);
+    const checkbox = task.status === "DONE" ? "- [x]" : "- [ ]";
 
-      // Remaining lines as task description
-      const descriptionLines = lines.slice(1);
+    const description = descriptionLines
+      .map((line) => (line.trim() ? `${checkbox} ${line}` : ""))
+      .filter(Boolean)
+      .join("\n");
 
-      // Add checkbox for the task itself
-      const checkbox = task.status === "DONE" ? "- [x] " : "- [ ] "; // For any other status
+    // Status and type badges
+    const statusBadge = `**Status:** \`${task.status}\``;
+    const typeBadge = `**Type:** \`${task.taskType}\``;
 
-      // Format each description line with checkbox if non-empty
-      const description = descriptionLines
-        .map((line) => (line.trim() ? `${checkbox}${line}` : ""))
-        .filter(Boolean)
-        .join("\n");
+    // Combine everything for this task
+    markdown += `${title}\n${statusBadge} | ${typeBadge}\n\n`;
+    if (description) markdown += `${description}\n\n`;
 
-      // Combine title + description
-      return description ? `${title}\n${description}` : title;
-    })
-    .join("\n\n"); // separate tasks with empty line
+    // Divider between tasks, except after last one
+    if (index < convertableTasks.length - 1) {
+      markdown += `---\n\n`;
+    }
+  });
+
+  return markdown;
 }
