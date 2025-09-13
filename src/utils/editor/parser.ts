@@ -39,8 +39,8 @@ export function parseTasksToMarkdown(tasks: Descendant[]): string {
       .join("\n");
 
     // Status and type badges
-    const statusBadge = `\n**Status:** \`${task.status}\``;
-    const typeBadge = `\n**Type:** \`${task.taskType}\``;
+    const statusBadge = `\n**Status:** \`${task.status.replace("_", " ")}\``;
+    const typeBadge = `\n**Type:** \`${task.taskType.replace("_", " ")}\``;
 
     // Combine everything for this task
     markdown += `${title}\n${statusBadge} | ${typeBadge}\n\n`;

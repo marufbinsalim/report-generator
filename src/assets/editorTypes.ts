@@ -17,18 +17,9 @@ export type CustomTextType = {
   bold?: boolean;
 };
 
-type TaskType =
-  | "FEATURE"
-  | "DESIGN"
-  | "BUG_FIX"
-  | "REFACTOR"
-  | "TEST"
-  | "DOCUMENTATION"
-  | "RESEARCH"
-  | "MAINTENANCE"
-  | "DEPLOYMENT";
+type TaskType = string;
 
-type StatusType = "TODO" | "IN_PROGRESS" | "UNDER_REVIEW" | "DONE";
+type StatusType = string;
 
 export type TaskElementType = {
   type: "task";

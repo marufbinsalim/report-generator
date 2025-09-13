@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { createEditor } from "slate";
 import { withHistory } from "slate-history";
 import { RenderElementProps, RenderLeafProps, withReact } from "slate-react";
@@ -8,7 +8,7 @@ import Leaf from "../elements/leaf";
 
 // Custom hook to setup the editor with history & react
 function useEditorSetup() {
-  const editor = withHistory(withReact(createEditor()));
+  const editor = useMemo(() => withHistory(withReact(createEditor())), []);
 
   const renderElement = useCallback(
     (props: RenderElementProps) => renderEditorElement(props),
