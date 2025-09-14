@@ -93,8 +93,10 @@ export default function HelpModal({ isOpen, onClose }: HelpModalProps) {
               <div>
                 <p className="mb-2 font-medium">Editor Actions</p>
                 <ul className="space-y-1 text-xs">
-                  <li>• Cmd/Ctrl + B: Bold (already implemented)</li>
-                  <li>• Shift + Enter: Add new task (already implemented)</li>
+                  <li>• Cmd/Ctrl + B: Bold (When cursor is inside A Task)</li>
+                  <li>
+                    • Shift + Enter: Add new task (When cursor is inside A Task)
+                  </li>
                 </ul>
               </div>
               <div>
