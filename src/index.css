@@ -31,6 +31,8 @@ body {
   box-sizing: border-box;
   background-color: var(--color-bg-default);
   color: var(--color-text-default);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-default) var(--color-bg-default);
 }
 
 #root {
@@ -38,10 +40,8 @@ body {
   background-color: var(--color-bg-default);
 }
 
-/* Custom select styles to match theme */
 select {
   background-color: var(--color-bg-default);
-  /* color: var(--color-text-default); */
   border-color: var(--color-border-default);
 }
 
@@ -51,11 +51,27 @@ select:focus {
 
 select option {
   background-color: var(--color-bg-default);
-  /* color: var(--color-text-default); */
   padding: 0.5rem;
 }
 
 select option:checked {
   background-color: var(--color-bg-primary);
-  /* color: var(--color-text-default); */
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-default);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-gray);
 }
