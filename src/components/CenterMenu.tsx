@@ -1,12 +1,4 @@
-import {
-  Plus,
-  Settings,
-  HelpCircle,
-  Play,
-  Save,
-  FileText,
-  List,
-} from "lucide-react";
+import { Plus, HelpCircle, Play, Save, List } from "lucide-react";
 import { motion } from "framer-motion";
 import { Template } from "../types/template";
 import { toast } from "react-hot-toast";
@@ -21,7 +13,6 @@ interface CenterMenuProps {
 }
 
 export function CenterMenu({
-  onOpenSelector,
   onTogglePreview,
   onSaveReport,
   onOpenReports,
@@ -29,10 +20,6 @@ export function CenterMenu({
 }: CenterMenuProps) {
   const handlePreview = () => {
     onTogglePreview();
-  };
-
-  const handleSelector = () => {
-    onOpenSelector?.();
   };
 
   const dummyAction = () => {
