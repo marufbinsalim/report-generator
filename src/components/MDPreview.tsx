@@ -97,29 +97,29 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="flex flex-col bg-gray-100 dark:bg-gray-900 shadow-lg p-6 rounded-lg w-[90vw] max-w-3xl max-h-[80vh]"
+            className="flex flex-col bg-[var(--color-bg-gray)] shadow-lg p-6 rounded-lg w-[90vw] max-w-3xl max-h-[80vh]"
           >
             {/* Header */}
             <div className="flex flex-col gap-4 mb-4">
               <div className="flex justify-between items-center">
-                <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
+                <h2 className="font-semibold text-[var(--color-text-default)] text-lg">
                   Markdown Preview
                 </h2>
                 <button
                   onClick={onToggle}
-                  className="flex justify-center items-center bg-red-600 hover:bg-red-700 p-2 rounded text-white transition"
+                  className="flex justify-center items-center bg-[var(--color-bg-error)] hover:bg-[var(--color-bg-error)]/[0.8] p-2 rounded text-[var(--color-text-default)] transition"
                 >
                   <X size={16} />
                 </button>
               </div>
               {/* Tabs */}
-              <div className="flex border-gray-200 dark:border-gray-700 border-b">
+              <div className="flex border border-[var(--color-border-default)] border-b">
                 <button
                   onClick={() => setActiveTab("normal")}
                   className={`px-4 py-2 text-sm font-medium transition-colors ${
                     activeTab === "normal"
-                      ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                      : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                      ? "border-b-2 border-[var(--color-text-primary)] text-[var(--color-text-primary)]"
+                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
                   }`}
                 >
                   Normal
@@ -128,8 +128,8 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
                   onClick={() => setActiveTab("ai")}
                   className={`px-4 py-2 text-sm font-medium transition-colors ${
                     activeTab === "ai"
-                      ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                      : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                      ? "border-b-2 border-[var(--color-text-primary)] text-[var(--color-text-primary)]"
+                      : "text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
                   }`}
                 >
                   AI Refine
@@ -139,7 +139,7 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
               {activeTab === "normal" && (
                 <button
                   onClick={() => copyToClipboard(markdown)}
-                  className="flex items-center self-end gap-1 bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white transition"
+                  className="flex items-center self-end gap-1 bg-[var(--color-bg-success)] hover:bg-[var(--color-bg-success)]/[0.8] px-3 py-1 rounded text-[var(--color-text-default)] transition"
                 >
                   <Copy size={16} />
                   Copy Normal
@@ -150,27 +150,27 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
             {/* Tab Content */}
             <div className="flex-1 overflow-auto">
               {activeTab === "normal" ? (
-                <div className="p-4 max-w-none text-white whitespace-pre-wrap dark:prose prose prose-sm">
+                <div className="p-4 max-w-none text-[var(--color-text-default)] whitespace-pre-wrap prose prose-sm">
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
                       h1: ({ children }) => (
-                        <h1 className="font-bold text-gray-900 dark:text-white text-3xl">
+                        <h1 className="font-bold text-[var(--color-text-default)] text-3xl">
                           {children}
                         </h1>
                       ),
                       h2: ({ children }) => (
-                        <h2 className="font-semibold text-gray-900 dark:text-white text-2xl">
+                        <h2 className="font-semibold text-[var(--color-text-default)] text-2xl">
                           {children}
                         </h2>
                       ),
                       h3: ({ children }) => (
-                        <h3 className="font-semibold text-gray-900 dark:text-white text-xl">
+                        <h3 className="font-semibold text-[var(--color-text-default)] text-xl">
                           {children}
                         </h3>
                       ),
                       li: ({ children }) => (
-                        <li className="ml-4 text-gray-800 dark:text-gray-200 list-disc">
+                        <li className="ml-4 text-[var(--color-text-gray)] list-disc">
                           {children}
                         </li>
                       ),
@@ -183,14 +183,14 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
                 <div className="space-y-4 p-4">
                   {/* Prompt Input */}
                   <div>
-                    <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm">
+                    <label className="block mb-2 font-medium text-[var(--color-text-gray)] text-sm">
                       Refinement Prompt
                     </label>
                     <textarea
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
                       placeholder="Describe how you want to refine this markdown (e.g., 'Make it more concise', 'Add bullet points', 'Improve structure')..."
-                      className="bg-white dark:bg-gray-800 p-3 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-gray-100"
+                      className="bg-[var(--color-bg-default)] p-3 border border-[var(--color-border-default)] rounded-md focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-full text-[var(--color-text-default)]"
                       rows={3}
                     />
                   </div>
@@ -198,7 +198,7 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
                   <button
                     onClick={refineMarkdown}
                     disabled={!prompt.trim() || isRefining}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 px-4 py-2 rounded-md text-white transition"
+                    className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] disabled:bg-[var(--color-bg-gray)] px-4 py-2 rounded-md text-[var(--color-text-default)] transition"
                   >
                     {isRefining ? (
                       <Loader2 size={16} className="animate-spin" />
@@ -208,14 +208,14 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
                   </button>
                   {/* Refined Markdown Preview */}
                   {refinedMarkdown && (
-                    <div className="p-4 max-w-none text-white whitespace-pre-wrap dark:prose prose prose-sm">
+                    <div className="p-4 max-w-none text-[var(--color-text-default)] whitespace-pre-wrap prose prose-sm">
                       <div className="flex justify-between items-center mb-4">
-                        <h3 className="font-semibold text-gray-900 dark:text-gray-100">
+                        <h3 className="font-semibold text-[var(--color-text-default)]">
                           Refined Markdown
                         </h3>
                         <button
                           onClick={() => copyToClipboard(refinedMarkdown)}
-                          className="flex items-center gap-1 bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-white transition"
+                          className="flex items-center gap-1 bg-[var(--color-bg-success)] hover:bg-[var(--color-bg-success)]/[0.8] px-3 py-1 rounded text-[var(--color-text-default)] transition"
                         >
                           <Copy size={16} />
                           Copy Refined
@@ -225,27 +225,27 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
                         remarkPlugins={[remarkGfm]}
                         components={{
                           h1: ({ children }) => (
-                            <h1 className="font-bold text-gray-900 dark:text-white text-3xl">
+                            <h1 className="font-bold text-[var(--color-text-default)] text-3xl">
                               {children}
                             </h1>
                           ),
                           h2: ({ children }) => (
-                            <h2 className="font-semibold text-gray-900 dark:text-white text-2xl">
+                            <h2 className="font-semibold text-[var(--color-text-default)] text-2xl">
                               {children}
                             </h2>
                           ),
                           h3: ({ children }) => (
-                            <h3 className="font-semibold text-gray-900 dark:text-white text-xl">
+                            <h3 className="font-semibold text-[var(--color-text-default)] text-xl">
                               {children}
                             </h3>
                           ),
                           ul: ({ children }) => (
-                            <ul className="ml-6 text-gray-800 dark:text-gray-200 list-disc">
+                            <ul className="ml-6 text-[var(--color-text-gray)] list-disc">
                               {children}
                             </ul>
                           ),
                           ol: ({ children }) => (
-                            <ol className="ml-6 text-gray-800 dark:text-gray-200 list-decimal">
+                            <ol className="ml-6 text-[var(--color-text-gray)] list-decimal">
                               {children}
                             </ol>
                           ),

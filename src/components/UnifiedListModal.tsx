@@ -144,29 +144,29 @@ export default function UnifiedListModal({
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
-          className="flex flex-col bg-white dark:bg-gray-800 shadow-xl rounded-lg w-full max-w-2xl max-h-[80vh]"
+          className="flex flex-col bg-[var(--color-bg-default)] shadow-xl rounded-lg w-full max-w-2xl max-h-[80vh]"
         >
           {/* Header */}
-          <div className="flex justify-between items-center p-4 border-gray-200 dark:border-gray-700 border-b">
-            <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
+          <div className="flex justify-between items-center p-4 border border-[var(--color-border-default)] border-b">
+            <h2 className="font-semibold text-[var(--color-text-default)] text-lg">
               Manage {title}
             </h2>
             <button
               onClick={onClose}
-              className="p-1 rounded focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
+              className="p-1 rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
             >
               <X size={24} />
             </button>
           </div>
 
           {/* Tabs */}
-          <div className="flex border-gray-200 dark:border-gray-700 border-b">
+          <div className="flex border border-[var(--color-border-default)] border-b">
             <button
               onClick={() => setActiveTab("templates")}
               className={`px-4 py-2 text-sm font-medium flex items-center gap-2 ${
                 activeTab === "templates"
-                  ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  ? "border-b-2 border-[var(--color-text-primary)] text-[var(--color-text-primary)]"
+                  : "text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
               }`}
             >
               <Settings size={16} />
@@ -176,8 +176,8 @@ export default function UnifiedListModal({
               onClick={() => setActiveTab("reports")}
               className={`px-4 py-2 text-sm font-medium flex items-center gap-2 ${
                 activeTab === "reports"
-                  ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                  : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  ? "border-b-2 border-[var(--color-text-primary)] text-[var(--color-text-primary)]"
+                  : "text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
               }`}
             >
               <FileText size={16} />
@@ -190,7 +190,7 @@ export default function UnifiedListModal({
             {activeTab === "templates" && (
               <div className="space-y-2">
                 {templates.length === 0 ? (
-                  <p className="py-8 text-gray-500 dark:text-gray-400 text-center">
+                  <p className="py-8 text-[var(--color-text-muted)] text-center">
                     No templates yet.
                   </p>
                 ) : (
@@ -198,18 +198,18 @@ export default function UnifiedListModal({
                     {templates.map((template) => (
                       <div
                         key={template.id}
-                        className="flex justify-between items-center bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 p-3 border border-gray-200 dark:border-gray-600 rounded cursor-pointer"
+                        className="flex justify-between items-center bg-[var(--color-bg-gray)] hover:bg-[var(--color-bg-hover)] p-3 border border-[var(--color-border-default)] rounded cursor-pointer"
                       >
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                          <div className="font-medium text-[var(--color-text-default)] truncate">
                             {template.name}
                           </div>
                           {template.description && (
-                            <div className="mt-1 text-gray-600 dark:text-gray-400 text-sm truncate">
+                            <div className="mt-1 text-[var(--color-text-gray)] text-sm truncate">
                               {template.description}
                             </div>
                           )}
-                          <div className="mt-1 text-gray-500 dark:text-gray-400 text-xs">
+                          <div className="mt-1 text-[var(--color-text-muted)] text-xs">
                             {template.taskTypes.length} task types,{" "}
                             {template.statuses.length} statuses
                           </div>
@@ -220,7 +220,7 @@ export default function UnifiedListModal({
                               e.stopPropagation();
                               handleEditTemplate(template);
                             }}
-                            className="p-1 text-green-500 hover:text-green-700"
+                            className="p-1 text-[var(--color-text-success)] hover:text-[var(--color-text-success)]/[0.8]"
                             title="Edit Template"
                           >
                             <Edit size={16} />
@@ -232,7 +232,7 @@ export default function UnifiedListModal({
                                   e.stopPropagation();
                                   handleDelete(template.id, "template");
                                 }}
-                                className="p-1 text-red-500 hover:text-red-700"
+                                className="p-1 text-[var(--color-text-error)] hover:text-[var(--color-text-error)]/[0.8]"
                                 title="Delete Template"
                               >
                                 <Trash2 size={16} />
@@ -245,7 +245,7 @@ export default function UnifiedListModal({
                 )}
                 <button
                   onClick={handleCreateNewTemplate}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 mt-4 px-4 py-2 rounded w-full text-white text-sm"
+                  className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] mt-4 px-4 py-2 rounded w-full text-[var(--color-text-default)] text-sm"
                 >
                   <Plus size={16} />
                   Create New Template
@@ -256,7 +256,7 @@ export default function UnifiedListModal({
             {activeTab === "reports" && (
               <div className="space-y-2">
                 {reports.length === 0 ? (
-                  <p className="py-8 text-gray-500 dark:text-gray-400 text-center">
+                  <p className="py-8 text-[var(--color-text-muted)] text-center">
                     No reports yet. Create one by editing and saving.
                   </p>
                 ) : (
@@ -264,30 +264,30 @@ export default function UnifiedListModal({
                     {reports.map((report) => (
                       <div
                         key={report.id}
-                        className="flex justify-between items-center bg-gray-50 dark:bg-gray-700 p-3 border border-gray-200 dark:border-gray-600 rounded"
+                        className="flex justify-between items-center bg-[var(--color-bg-gray)] p-3 border border-[var(--color-border-default)] rounded"
                       >
                         <div className="flex-1 min-w-0">
-                          <div className="font-medium text-gray-900 dark:text-gray-100 truncate">
+                          <div className="font-medium text-[var(--color-text-default)] truncate">
                             {report.title || `Report ${report.id}`}
                           </div>
-                          <div className="text-gray-500 dark:text-gray-400 text-sm truncate">
+                          <div className="text-[var(--color-text-muted)] text-sm truncate">
                             Template ID: {report.templateId}
                           </div>
-                          <div className="text-gray-400 text-xs">
+                          <div className="text-[var(--color-text-gray)] text-xs">
                             Created: {report.createdAt.toLocaleDateString()}
                           </div>
                         </div>
                         <div className="flex gap-1">
                           <button
                             onClick={() => handleEditReport(report)}
-                            className="p-1 text-green-500 hover:text-green-700"
+                            className="p-1 text-[var(--color-text-success)] hover:text-[var(--color-text-success)]/[0.8]"
                             title="Edit Report"
                           >
                             <Edit size={16} />
                           </button>
                           <button
                             onClick={() => handleDelete(report.id, "report")}
-                            className="p-1 text-red-500 hover:text-red-700"
+                            className="p-1 text-[var(--color-text-error)] hover:text-[var(--color-text-error)]/[0.8]"
                             title="Delete Report"
                           >
                             <Trash2 size={16} />

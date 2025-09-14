@@ -60,10 +60,12 @@ export default function Task({
     return (
       <div
         {...attributes}
-        className="flex flex-col gap-2 bg-gray-900 shadow-sm p-3 border border-gray-700 rounded-md w-full"
+        className="flex flex-col gap-2 bg-[var(--color-bg-default)] shadow-sm p-3 border border-[var(--color-border-default)] rounded-md w-full"
       >
-        <div className="text-gray-300 text-sm">Loading template...</div>
-        <div className="text-gray-300 text-sm">{children}</div>
+        <div className="text-[var(--color-text-gray)] text-sm">
+          Loading template...
+        </div>
+        <div className="text-[var(--color-text-gray)] text-sm">{children}</div>
       </div>
     );
   }
@@ -78,7 +80,7 @@ export default function Task({
   return (
     <div
       {...attributes}
-      className="flex flex-col gap-2 bg-gray-900 shadow-sm p-3 border border-gray-700 rounded-md w-full"
+      className="flex flex-col gap-2 bg-[var(--color-bg-default)] shadow-sm p-3 border border-[var(--color-border-default)] rounded-md w-full"
     >
       {/* Header: TaskType + Status */}
       <div
@@ -90,7 +92,7 @@ export default function Task({
           <select
             value={elementState.taskType}
             onChange={(e) => handleTaskTypeChange(e.target.value)}
-            className="flex items-center gap-1 bg-gray-800 px-2 py-1 border border-gray-700 rounded font-medium text-gray-200 text-sm cursor-pointer"
+            className="flex items-center gap-1 bg-[var(--color-bg-gray)] px-2 py-1 border border-[var(--color-border-default)] rounded font-medium text-[var(--color-text-default)] text-sm cursor-pointer"
           >
             {activeTemplate.taskTypes.map((taskType) => (
               <option key={taskType.name} value={taskType.name}>
@@ -100,7 +102,7 @@ export default function Task({
           </select>
           {currentTaskType &&
             React.createElement(getIconComponent(currentTaskType.icon), {
-              className: `w-4 h-4 ${currentTaskType.color}`,
+              className: `w-4 h-4 text-[var(--color-text-${currentTaskType.color})]`,
             })}
         </div>
 
@@ -108,9 +110,9 @@ export default function Task({
         <select
           value={elementState.status}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className={`px-2 py-1 text-xs font-medium rounded ${
-            currentStatus?.color || "bg-gray-800 text-gray-200"
-          } cursor-pointer`}
+          className={`px-2 py-1 text-xs font-medium rounded bg-[var(--color-bg-${
+            currentStatus?.color || "gray"
+          })] text-[var(--color-text-default)] cursor-pointer`}
         >
           {activeTemplate.statuses.map((status) => (
             <option key={status.name} value={status.name}>
@@ -121,7 +123,7 @@ export default function Task({
       </div>
 
       {/* Task content */}
-      <div className="text-gray-300 text-sm">{children}</div>
+      <div className="text-[var(--color-text-gray)] text-sm">{children}</div>
     </div>
   );
 }

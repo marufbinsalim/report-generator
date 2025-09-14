@@ -64,42 +64,14 @@ const ICON_MAP = {
   Clock: Clock,
 } as const;
 
-const COMMON_TEXT_COLORS = [
-  "text-blue-400",
-  "text-green-400",
-  "text-red-400",
-  "text-yellow-400",
-  "text-purple-400",
-  "text-pink-400",
-  "text-indigo-400",
-  "text-emerald-400",
-  "text-orange-400",
-  "text-gray-400",
-] as const;
+const COMMON_TEXT_COLORS = ["default", "primary", "secondary", "gray"] as const;
 
-const COMMON_BG_COLORS = [
-  "bg-blue-600 text-white",
-  "bg-green-600 text-white",
-  "bg-red-600 text-white",
-  "bg-yellow-600 text-black",
-  "bg-purple-600 text-white",
-  "bg-pink-600 text-white",
-  "bg-indigo-600 text-white",
-  "bg-emerald-600 text-white",
-  "bg-orange-600 text-white",
-  "bg-gray-600 text-white",
-] as const;
+const COMMON_BG_COLORS = ["primary", "secondary", "gray", "default"] as const;
 
 const COLOR_NAMES = {
-  blue: "Blue",
-  green: "Green",
-  red: "Red",
-  yellow: "Yellow",
-  purple: "Purple",
-  pink: "Pink",
-  indigo: "Indigo",
-  emerald: "Emerald",
-  orange: "Orange",
+  default: "Default",
+  primary: "Primary",
+  secondary: "Secondary",
   gray: "Gray",
 } as const;
 
@@ -171,7 +143,7 @@ export default function UnifiedCreateModal({
   const addTaskType = () => {
     setTaskTypes([
       ...taskTypes,
-      { name: "", icon: "Zap" as AvailableIcon, color: "text-blue-400" },
+      { name: "", icon: "Zap" as AvailableIcon, color: "primary" },
     ]);
   };
 
@@ -205,7 +177,7 @@ export default function UnifiedCreateModal({
   };
 
   const addStatus = () => {
-    setStatuses([...statuses, { name: "", color: "bg-gray-600 text-white" }]);
+    setStatuses([...statuses, { name: "", color: "primary" }]);
   };
 
   const updateStatus = (
@@ -270,11 +242,11 @@ export default function UnifiedCreateModal({
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="flex flex-col bg-white dark:bg-gray-800 shadow-xl rounded-lg w-full max-w-4xl max-h-[90vh]"
+        className="flex flex-col bg-[var(--color-bg-default)] shadow-xl rounded-lg w-full max-w-4xl max-h-[90vh]"
       >
         {/* Header */}
-        <div className="flex justify-between items-center p-4 border-gray-200 dark:border-gray-700 border-b">
-          <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
+        <div className="flex justify-between items-center p-4 border border-[var(--color-border-default)] border-b">
+          <h2 className="font-semibold text-[var(--color-text-default)] text-lg">
             {activeTab === "report"
               ? "Create New Report"
               : template
@@ -283,20 +255,20 @@ export default function UnifiedCreateModal({
           </h2>
           <button
             onClick={onClose}
-            className="p-1 rounded focus:outline-none focus:ring-2 focus:ring-gray-500 text-gray-500 hover:text-gray-700 dark:hover:text-gray-200"
+            className="p-1 rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
           >
             <X size={24} />
           </button>
         </div>
 
         {/* Tabs */}
-        <div className="flex border-gray-200 dark:border-gray-700 border-b">
+        <div className="flex border border-[var(--color-border-default)] border-b">
           <button
             onClick={() => setActiveTab("report")}
             className={`px-4 py-2 text-sm font-medium flex items-center gap-2 ${
               activeTab === "report"
-                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                ? "border-b-2 border-[var(--color-text-primary)] text-[var(--color-text-primary)]"
+                : "text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
             }`}
           >
             <FileText size={16} />
@@ -306,8 +278,8 @@ export default function UnifiedCreateModal({
             onClick={() => setActiveTab("template")}
             className={`px-4 py-2 text-sm font-medium flex items-center gap-2 ${
               activeTab === "template"
-                ? "border-b-2 border-blue-500 text-blue-600 dark:text-blue-400"
-                : "text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                ? "border-b-2 border-[var(--color-text-primary)] text-[var(--color-text-primary)]"
+                : "text-[var(--color-text-muted)] hover:text-[var(--color-text-default)]"
             }`}
           >
             <Plus size={16} />
@@ -320,7 +292,7 @@ export default function UnifiedCreateModal({
           {activeTab === "report" && (
             <div className="p-4 max-h-[60vh] overflow-y-auto">
               {templates.length === 0 ? (
-                <p className="py-8 text-gray-500 dark:text-gray-400 text-center">
+                <p className="py-8 text-[var(--color-text-muted)] text-center">
                   No templates available. Create one first.
                 </p>
               ) : (
@@ -328,26 +300,26 @@ export default function UnifiedCreateModal({
                   {templates.map((template) => (
                     <div
                       key={template.id}
-                      className="flex justify-between items-center bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 p-3 border border-gray-200 dark:border-gray-600 rounded cursor-pointer"
+                      className="flex justify-between items-center bg-[var(--color-bg-gray)] hover:bg-[var(--color-bg-hover)] p-3 border border-[var(--color-border-default)] rounded cursor-pointer"
                       onClick={() => !loading && handleCreateReport(template)}
                     >
                       <div className="flex-1">
-                        <div className="font-medium text-gray-900 dark:text-gray-100">
+                        <div className="font-medium text-[var(--color-text-default)]">
                           {template.name}
                         </div>
                         {template.description && (
-                          <div className="mt-1 text-gray-600 dark:text-gray-400 text-sm">
+                          <div className="mt-1 text-[var(--color-text-gray)] text-sm">
                             {template.description}
                           </div>
                         )}
-                        <div className="mt-1 text-gray-500 text-xs">
+                        <div className="mt-1 text-[var(--color-text-muted)] text-xs">
                           {template.taskTypes.length} task types,{" "}
                           {template.statuses.length} statuses
                         </div>
                       </div>
                       <button
                         disabled={loading}
-                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 px-4 py-2 rounded text-white"
+                        className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] disabled:bg-[var(--color-bg-gray)] px-4 py-2 rounded text-[var(--color-text-default)]"
                       >
                         <FileText size={16} />
                         Create
@@ -364,26 +336,26 @@ export default function UnifiedCreateModal({
               {/* Template Info */}
               <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
                 <div>
-                  <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm">
+                  <label className="block mb-2 font-medium text-[var(--color-text-gray)] text-sm">
                     Template Name *
                   </label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="bg-white dark:bg-gray-700 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                    className="bg-[var(--color-bg-default)] px-3 py-2 border border-[var(--color-border-default)] rounded-md focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-full placeholder-[var(--color-text-gray)] text-[var(--color-text-default)]"
                     placeholder="e.g., Agile Development"
                   />
                 </div>
                 <div>
-                  <label className="block mb-2 font-medium text-gray-700 dark:text-gray-300 text-sm">
+                  <label className="block mb-2 font-medium text-[var(--color-text-gray)] text-sm">
                     Description
                   </label>
                   <input
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="bg-white dark:bg-gray-700 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-full text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400"
+                    className="bg-[var(--color-bg-default)] px-3 py-2 border border-[var(--color-border-default)] rounded-md focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-full placeholder-[var(--color-text-gray)] text-[var(--color-text-default)]"
                     placeholder="Optional description"
                   />
                 </div>
@@ -391,13 +363,13 @@ export default function UnifiedCreateModal({
 
               {/* Task Types */}
               <div>
-                <div className="flex justify-between items-center bg-white dark:bg-gray-800 mb-2 py-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
+                <div className="flex justify-between items-center bg-[var(--color-bg-default)] mb-2 py-1">
+                  <h3 className="font-semibold text-[var(--color-text-default)] text-lg">
                     Task Types
                   </h3>
                   <button
                     onClick={addTaskType}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm"
+                    className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] px-3 py-1 rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 text-[var(--color-text-default)] text-sm"
                   >
                     <Plus size={16} /> Add Task Type
                   </button>
@@ -409,7 +381,7 @@ export default function UnifiedCreateModal({
                     return (
                       <div
                         key={index}
-                        className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 p-3 border border-gray-200 dark:border-gray-600 rounded"
+                        className="flex items-center gap-2 bg-[var(--color-bg-gray)] p-3 border border-[var(--color-border-default)] rounded"
                       >
                         <input
                           type="text"
@@ -418,7 +390,7 @@ export default function UnifiedCreateModal({
                             updateTaskType(index, "name", e.target.value)
                           }
                           placeholder="Task type name"
-                          className="flex-1 bg-white dark:bg-gray-600 px-2 py-1 border border-gray-300 dark:border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+                          className="flex-1 bg-[var(--color-bg-default)] px-2 py-1 border border-[var(--color-border-default)] rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 text-[var(--color-text-default)]"
                         />
                         <select
                           value={taskType.icon}
@@ -428,7 +400,7 @@ export default function UnifiedCreateModal({
                               e.target.value as AvailableIcon
                             )
                           }
-                          className="bg-white dark:bg-gray-600 px-2 py-1 border border-gray-300 dark:border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-24 text-gray-900 dark:text-gray-100"
+                          className="bg-[var(--color-bg-default)] px-2 py-1 border border-[var(--color-border-default)] rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-24 text-[var(--color-text-default)]"
                         >
                           {AVAILABLE_ICONS.map((icon) => (
                             <option key={icon} value={icon}>
@@ -445,26 +417,21 @@ export default function UnifiedCreateModal({
                                 .value as (typeof COMMON_TEXT_COLORS)[number]
                             )
                           }
-                          className="bg-white dark:bg-gray-600 px-2 py-1 border border-gray-300 dark:border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-32 text-gray-900 dark:text-gray-100"
+                          className="bg-[var(--color-bg-default)] px-2 py-1 border border-[var(--color-border-default)] rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-32 text-[var(--color-text-default)]"
                         >
-                          {COMMON_TEXT_COLORS.map((color) => {
-                            const colorNameKey = color.split(
-                              "-"
-                            )[1] as keyof typeof COLOR_NAMES;
-                            return (
-                              <option key={color} value={color}>
-                                {COLOR_NAMES[colorNameKey]}
-                              </option>
-                            );
-                          })}
+                          {COMMON_TEXT_COLORS.map((color) => (
+                            <option key={color} value={color}>
+                              {COLOR_NAMES[color as keyof typeof COLOR_NAMES]}
+                            </option>
+                          ))}
                         </select>
                         <IconComponent
                           size={20}
-                          className={`${taskType.color} rounded`}
+                          className={`text-[var(--color-text-${taskType.color})] rounded`}
                         />
                         <button
                           onClick={() => removeTaskType(index)}
-                          className="p-1 rounded text-red-500 hover:text-red-700"
+                          className="p-1 rounded text-[var(--color-text-error)] hover:text-[var(--color-text-error)]/[0.8]"
                         >
                           <Trash2 size={16} />
                         </button>
@@ -476,13 +443,13 @@ export default function UnifiedCreateModal({
 
               {/* Statuses */}
               <div>
-                <div className="flex justify-between items-center bg-white dark:bg-gray-800 mb-2 py-1">
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
+                <div className="flex justify-between items-center bg-[var(--color-bg-default)] mb-2 py-1">
+                  <h3 className="font-semibold text-[var(--color-text-default)] text-lg">
                     Statuses
                   </h3>
                   <button
                     onClick={addStatus}
-                    className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm"
+                    className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] px-3 py-1 rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 text-[var(--color-text-default)] text-sm"
                   >
                     <Plus size={16} /> Add Status
                   </button>
@@ -491,7 +458,7 @@ export default function UnifiedCreateModal({
                   {statuses.map((status, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-2 bg-gray-50 dark:bg-gray-700 p-3 border border-gray-200 dark:border-gray-600 rounded"
+                      className="flex items-center gap-2 bg-[var(--color-bg-gray)] p-3 border border-[var(--color-border-default)] rounded"
                     >
                       <input
                         type="text"
@@ -500,7 +467,7 @@ export default function UnifiedCreateModal({
                           updateStatus(index, "name", e.target.value)
                         }
                         placeholder="Status name"
-                        className="flex-1 bg-white dark:bg-gray-600 px-2 py-1 border border-gray-300 dark:border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900 dark:text-gray-100"
+                        className="flex-1 bg-[var(--color-bg-default)] px-2 py-1 border border-[var(--color-border-default)] rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 text-[var(--color-text-default)]"
                       />
                       <select
                         value={status.color}
@@ -510,26 +477,20 @@ export default function UnifiedCreateModal({
                             e.target.value as (typeof COMMON_BG_COLORS)[number]
                           )
                         }
-                        className="bg-white dark:bg-gray-600 px-2 py-1 border border-gray-300 dark:border-gray-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 w-48 text-gray-900 dark:text-gray-100"
+                        className="bg-[var(--color-bg-default)] px-2 py-1 border border-[var(--color-border-default)] rounded focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-48 text-[var(--color-text-default)]"
                       >
-                        {COMMON_BG_COLORS.map((color) => {
-                          const mainColorClass = color.split(" ")[0];
-                          const colorNameKey = mainColorClass.split(
-                            "-"
-                          )[1] as keyof typeof COLOR_NAMES;
-                          return (
-                            <option key={color} value={color}>
-                              {COLOR_NAMES[colorNameKey]}
-                            </option>
-                          );
-                        })}
+                        {COMMON_BG_COLORS.map((color) => (
+                          <option key={color} value={color}>
+                            {COLOR_NAMES[color as keyof typeof COLOR_NAMES]}
+                          </option>
+                        ))}
                       </select>
                       <span
-                        className={`w-4 h-4 rounded-full block border border-gray-300 ${status.color}`}
+                        className={`w-4 h-4 rounded-full block border border-[var(--color-border-default)] bg-[var(--color-bg-${status.color})]`}
                       />
                       <button
                         onClick={() => removeStatus(index)}
-                        className="p-1 rounded text-red-500 hover:text-red-700"
+                        className="p-1 rounded text-[var(--color-text-error)] hover:text-[var(--color-text-error)]/[0.8]"
                       >
                         <Trash2 size={16} />
                       </button>
@@ -539,11 +500,11 @@ export default function UnifiedCreateModal({
               </div>
 
               {/* Save Button for Template */}
-              <div className="pt-4 border-gray-200 dark:border-gray-700 border-t">
+              <div className="pt-4 border border-[var(--color-border-default)] border-t">
                 <button
                   onClick={handleSaveTemplate}
                   disabled={!name.trim()}
-                  className="flex justify-center items-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-400 px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-green-500 w-full text-white disabled:text-gray-500"
+                  className="flex justify-center items-center gap-2 bg-[var(--color-bg-success)] hover:bg-[var(--color-bg-success)]/[0.8] disabled:bg-[var(--color-bg-gray)] px-4 py-2 rounded focus:outline-none focus:ring-[var(--color-text-success)] focus:ring-2 w-full text-[var(--color-text-default)] disabled:text-[var(--color-text-gray)]"
                 >
                   <Save size={16} />
                   Create Template

@@ -132,7 +132,7 @@ function AppContent() {
   const editorKey = activeReport?.id || activeTemplate?.id || "default";
 
   return (
-    <div className="relative flex bg-[#dbdbdb] dark:bg-gray-800 h-svh max-h-svh overflow-hidden">
+    <div className="relative flex bg-[var(--color-bg-default)] h-svh max-h-svh overflow-hidden">
       <CenterMenu
         onOpenBuilder={handleOpenCreate}
         onOpenSelector={handleOpenList}
@@ -145,14 +145,14 @@ function AppContent() {
         {activeReport ? (
           <>
             {/* Sticky Toolbar */}
-            <div className="top-0 z-10 sticky flex justify-between items-center bg-white dark:bg-gray-800 p-4 border-gray-200 dark:border-gray-700 border-b">
+            <div className="top-0 z-10 sticky flex justify-between items-center bg-[var(--color-bg-default)] p-4 px-12 border-[var(--color-border-default)] border-b">
               <div className="flex-1 min-w-0">
                 <input
                   type="text"
                   value={displayTitle}
                   onChange={(e) => handleTitleChange(e.target.value)}
                   placeholder="Untitled report"
-                  className="bg-transparent outline-none w-full font-bold text-gray-900 dark:text-white text-2xl placeholder-gray-500 dark:placeholder-gray-400"
+                  className="bg-transparent outline-none w-full font-bold placeholder-[var(--color-text-gray)] text-[var(--color-text-default)] text-2xl"
                 />
               </div>
               <div className="flex items-center gap-4">
@@ -160,28 +160,22 @@ function AppContent() {
                 <button
                   onClick={() => editor.undo()}
                   disabled={editor.history.undos.length === 0}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 p-2 rounded disabled:cursor-not-allowed"
+                  className="hover:bg-[var(--color-bg-gray)] disabled:opacity-50 p-2 rounded disabled:cursor-not-allowed"
                   title="Undo"
                 >
-                  <Undo
-                    size={20}
-                    className="text-gray-600 dark:text-gray-300"
-                  />
+                  <Undo size={20} className="text-[var(--color-text-gray)]" />
                 </button>
                 <button
                   onClick={() => editor.redo()}
                   disabled={editor.history.redos.length === 0}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 p-2 rounded disabled:cursor-not-allowed"
+                  className="hover:bg-[var(--color-bg-gray)] disabled:opacity-50 p-2 rounded disabled:cursor-not-allowed"
                   title="Redo"
                 >
-                  <Redo
-                    size={20}
-                    className="text-gray-600 dark:text-gray-300"
-                  />
+                  <Redo size={20} className="text-[var(--color-text-gray)]" />
                 </button>
                 {/* Report Details */}
                 {activeReport && activeTemplate && (
-                  <div className="flex items-center gap-4 text-gray-500 dark:text-gray-400 text-sm">
+                  <div className="flex items-center gap-4 text-[var(--color-text-muted)] text-sm">
                     <div className="flex items-center gap-1">
                       <Clock size={16} />
                       <span>
@@ -195,12 +189,12 @@ function AppContent() {
                 {/* Save Status */}
                 <div className="flex items-center gap-2">
                   {saveStatus === "saving" && (
-                    <span className="text-blue-600 dark:text-blue-400 text-sm animate-pulse">
+                    <span className="text-[var(--color-text-primary)] text-sm animate-pulse">
                       Saving...
                     </span>
                   )}
                   {saveStatus === "saved" && (
-                    <span className="text-green-600 dark:text-green-400 text-sm">
+                    <span className="text-[var(--color-text-success)] text-sm">
                       Saved
                     </span>
                   )}
@@ -208,7 +202,7 @@ function AppContent() {
                 {/* Delete Button */}
                 <button
                   onClick={() => setIsDeleteConfirmOpen(true)}
-                  className="hover:bg-red-50 dark:hover:bg-red-900/20 p-2 rounded text-red-600 dark:text-red-400"
+                  className="hover:bg-[var(--color-bg-error)] p-2 rounded text-[var(--color-text-error)]"
                   title="Delete Report"
                 >
                   <Trash2 size={20} />
@@ -216,7 +210,7 @@ function AppContent() {
               </div>
             </div>
             {/* Scrollable Content */}
-            <div className="flex-1 py-5 pl-[35px] overflow-y-auto">
+            <div className="flex-1 px-12 py-5 pl-[35px] w-[calc(100%-20px)] overflow-y-auto">
               <Slate
                 editor={editor}
                 initialValue={initialValue}
@@ -233,19 +227,19 @@ function AppContent() {
             </div>
           </>
         ) : (
-          <div className="flex flex-1 justify-center items-center bg-gray-50 dark:bg-gray-900 py-5 pl-[35px] overflow-y-auto">
+          <div className="flex flex-1 justify-center items-center bg-[var(--color-bg-gray)] py-5 pl-[35px] overflow-y-auto">
             <div className="p-8 max-w-md text-center">
-              <FileText className="mx-auto mb-4 w-12 h-12 text-gray-400" />
-              <h2 className="mb-2 font-bold text-gray-900 dark:text-white text-2xl">
+              <FileText className="mx-auto mb-4 w-12 h-12 text-[var(--color-text-muted)]" />
+              <h2 className="mb-2 font-bold text-[var(--color-text-default)] text-2xl">
                 No Active Report
               </h2>
-              <p className="mb-8 text-gray-600 dark:text-gray-400">
+              <p className="mb-8 text-[var(--color-text-gray)]">
                 It looks like you haven't created any reports yet. Start by
                 creating a new report using one of your templates.
               </p>
               <button
                 onClick={handleOpenNewReport}
-                className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-white transition-colors"
+                className="bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] px-6 py-2 rounded-lg focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 font-medium text-[var(--color-text-default)] transition-colors"
               >
                 Create New Report
               </button>

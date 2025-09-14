@@ -1,6 +1,62 @@
+@import "tailwindcss";
+
+:root {
+  --color-text-default: #d4d4d4;
+  --color-text-gray: #9b9b9b;
+  --color-text-primary: #cb7b37;
+  --color-text-secondary: #a27763;
+  --color-text-muted: #9b9b9b;
+  --color-text-error: #a27763;
+  --color-text-success: #cb7b37;
+  --color-text-border: #252525;
+  --color-text-hover: #d4d4d4;
+
+  --color-bg-default: #191919;
+  --color-bg-gray: #252525;
+  --color-bg-primary: #36291f;
+  --color-bg-secondary: #2e2724;
+  --color-bg-muted: #252525;
+  --color-bg-error: #2e2724;
+  --color-bg-success: #36291f;
+  --color-bg-hover: #2e2724;
+  --color-bg-border: #252525;
+
+  --color-border-default: #252525;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  background-color: var(--color-bg-default);
+  color: var(--color-text-default);
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--color-bg-default);
+}
+
+/* Custom select styles to match theme */
+select {
+  background-color: var(--color-bg-default);
+  color: var(--color-text-default);
+  border-color: var(--color-border-default);
+}
+
+select:focus {
+  outline: none;
+  ring: 2px solid var(--color-text-primary);
+}
+
+select option {
+  background-color: var(--color-bg-default);
+  color: var(--color-text-default);
+  padding: 0.5rem;
+}
+
+select option:checked {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-default);
 }
