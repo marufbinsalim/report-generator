@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Slate, Editable } from "slate-react";
 import { Transforms } from "slate";
 import { Toaster } from "react-hot-toast";
+import { FileText } from "lucide-react";
 
 import { getInitialValue } from "./data/CONSTANTS/editor_initial_value";
 import { useEditorSetup } from "./hooks/useEditorSetup";
@@ -122,11 +123,10 @@ function AppContent() {
         onOpenNewReport={handleOpenNewReport}
       />
 
-      {/* Editor */}
-      <Slate editor={editor} initialValue={initialValue} key={editorKey}>
-        <div className="relative flex flex-col flex-1 py-5 pl-[35px] overflow-y-auto">
-          <MDPreview isOpen={isPreviewOpen} onToggle={onTogglePreview} />
-          {activeReport && (
+      <div className="relative flex flex-col flex-1 py-5 pl-[35px] overflow-y-auto">
+        {activeReport ? (
+          <Slate editor={editor} initialValue={initialValue} key={editorKey}>
+            <MDPreview isOpen={isPreviewOpen} onToggle={onTogglePreview} />
             <div className="bg-gray-100 dark:bg-gray-700 mb-4 p-3 rounded-lg w-[calc(100%-20px)]">
               <label className="block mb-1 font-medium text-gray-700 dark:text-gray-300 text-sm">
                 Report Title
@@ -154,15 +154,34 @@ function AppContent() {
                 </div>
               </div>
             </div>
-          )}
-          <Editable
-            className="flex-1 outline-none w-[calc(100%-20px)] grow"
-            renderElement={renderElement}
-            renderLeaf={renderLeaf}
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-      </Slate>
+            <Editable
+              className="flex-1 outline-none w-[calc(100%-20px)] grow"
+              renderElement={renderElement}
+              renderLeaf={renderLeaf}
+              onKeyDown={handleKeyDown}
+            />
+          </Slate>
+        ) : (
+          <div className="flex flex-1 justify-center items-center bg-gray-50 dark:bg-gray-900 w-[calc(100%-20px)]">
+            <div className="p-8 max-w-md text-center">
+              <FileText className="mx-auto mb-4 w-12 h-12 text-gray-400" />
+              <h2 className="mb-2 font-bold text-gray-900 dark:text-white text-2xl">
+                No Active Report
+              </h2>
+              <p className="mb-8 text-gray-600 dark:text-gray-400">
+                It looks like you haven't created any reports yet. Start by
+                creating a new report using one of your templates.
+              </p>
+              <button
+                onClick={handleOpenNewReport}
+                className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium text-white transition-colors"
+              >
+                Create New Report
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       {/* Template Builder Modal */}
       <TemplateBuilder
