@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { X, Edit, Trash2, Eye, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Editor, Transforms } from "slate";
 import { Report } from "../types/report";
+import { INITIAL_VALUE } from "../data/CONSTANTS/editor_initial_value";
 import {
   getStoredReports,
   deleteReport,
@@ -10,6 +12,7 @@ import {
 } from "../utils/templateStorage";
 import { toast } from "react-hot-toast";
 import { useReport } from "../contexts/ReportContext";
+import { useTemplate } from "../contexts/TemplateContext";
 import ConfirmModal from "./ConfirmModal";
 
 interface ReportsListProps {
@@ -24,7 +27,8 @@ export default function ReportsList({
   editor,
 }: ReportsListProps) {
   const [reports, setReports] = useState<Report[]>([]);
-  const { setActiveReport } = useReport();
+  const { setActiveReport, activeReport, refreshReports } = useReport();
+  const { refreshTemplate } = useTemplate();
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [deletingReport, setDeletingReport] = useState<string | null>(null);
 
@@ -42,9 +46,18 @@ export default function ReportsList({
 
   const confirmDeleteReport = () => {
     if (deletingReport) {
+      const wasActive = activeReport?.id === deletingReport;
       deleteReport(deletingReport);
       setReports(reports.filter((r) => r.id !== deletingReport));
       toast.success("Report deleted");
+      refreshReports();
+      if (wasActive) {
+        editor.children = INITIAL_VALUE;
+        Transforms.select(editor, Editor.end(editor, []));
+        setActiveTemplate("default");
+        refreshTemplate();
+        onClose();
+      }
     }
     setIsConfirmOpen(false);
     setDeletingReport(null);
