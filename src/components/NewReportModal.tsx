@@ -3,11 +3,15 @@ import { X, Plus, FileText } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Template } from "../types/template";
 import { Editor } from "slate";
-import { getStoredTemplates } from "../utils/templateStorage";
+import {
+  getStoredTemplates,
+  setActiveTemplate,
+} from "../utils/templateStorage";
 import {
   saveCurrentReport,
   loadReportToEditor,
 } from "../utils/templateStorage";
+import { useTemplate } from "../contexts/TemplateContext";
 import { getInitialValue } from "../data/CONSTANTS/editor_initial_value";
 import { useReport } from "../contexts/ReportContext";
 import { toast } from "react-hot-toast";
@@ -26,6 +30,7 @@ export default function NewReportModal({
 }: NewReportModalProps) {
   const [templates, setTemplates] = useState<Template[]>([]);
   const { setActiveReport, refreshReports } = useReport();
+  const { refreshTemplate } = useTemplate();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -43,6 +48,8 @@ export default function NewReportModal({
     const initialContent = getInitialValue(template) as CustomElementType[];
     editor.children = initialContent;
     const reportId = saveCurrentReport(editor, template.id, title);
+    setActiveTemplate(template.id);
+    refreshTemplate();
     loadReportToEditor(editor, reportId);
     setActiveReport(reportId);
     refreshReports();
