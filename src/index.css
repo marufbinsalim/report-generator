@@ -41,7 +41,7 @@ body {
 /* Custom select styles to match theme */
 select {
   background-color: var(--color-bg-default);
-  color: var(--color-text-default);
+  /* color: var(--color-text-default); */
   border-color: var(--color-border-default);
 }
 
@@ -51,11 +51,11 @@ select:focus {
 
 select option {
   background-color: var(--color-bg-default);
-  color: var(--color-text-default);
+  /* color: var(--color-text-default); */
   padding: 0.5rem;
 }
 
 select option:checked {
   background-color: var(--color-bg-primary);
-  color: var(--color-text-default);
+  /* color: var(--color-text-default); */
 }

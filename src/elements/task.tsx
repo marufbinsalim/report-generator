@@ -80,7 +80,7 @@ export default function Task({
   return (
     <div
       {...attributes}
-      className="flex flex-col gap-2 bg-[var(--color-bg-default)] shadow-sm p-3 border border-[var(--color-border-default)] rounded-md w-full"
+      className="flex flex-col gap-2 bg-[var(--color-bg-default)] shadow-sm mb-2 p-3 border border-[var(--color-border-default)] rounded-md w-full"
     >
       {/* Header: TaskType + Status */}
       <div
@@ -102,7 +102,7 @@ export default function Task({
           </select>
           {currentTaskType &&
             React.createElement(getIconComponent(currentTaskType.icon), {
-              className: `w-4 h-4 text-[var(--color-text-${currentTaskType.color})]`,
+              className: `w-4 h-4 ${currentTaskType.color}`,
             })}
         </div>
 
@@ -110,12 +110,14 @@ export default function Task({
         <select
           value={elementState.status}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className={`px-2 py-1 text-xs font-medium rounded bg-[var(--color-bg-${
-            currentStatus?.color || "blue"
-          })] text-[var(--color-text-default)] cursor-pointer`}
+          className={`unset px-2 py-1 text-xs font-medium rounded text-${currentStatus?.color}-400 cursor-pointer border border-[var(--color-border-default)]`}
         >
           {activeTemplate.statuses.map((status) => (
-            <option key={status.name} value={status.name}>
+            <option
+              key={status.name}
+              value={status.name}
+              className={`unset px-2 py-1 text-xs font-medium rounded text-${status.color}-400 cursor-pointer border border-[var(--color-border-default)]`}
+            >
               {status.name.replace("_", " ")}
             </option>
           ))}
