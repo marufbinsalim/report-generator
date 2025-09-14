@@ -47,7 +47,6 @@ select {
 
 select:focus {
   outline: none;
-  ring: 2px solid var(--color-text-primary);
 }
 
 select option {

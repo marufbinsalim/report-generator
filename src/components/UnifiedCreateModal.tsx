@@ -344,7 +344,7 @@ export default function UnifiedCreateModal({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     className="bg-[var(--color-bg-default)] px-3 py-2 border border-[var(--color-border-default)] rounded-md focus:outline-none focus:ring-[var(--color-text-primary)] focus:ring-2 w-full placeholder-[var(--color-text-gray)] text-[var(--color-text-default)]"
-                    placeholder="e.g., Agile Development"
+                    placeholder="e.g., Project Name"
                   />
                 </div>
                 <div>
