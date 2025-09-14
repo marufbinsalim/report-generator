@@ -9,12 +9,7 @@ import { deleteReport } from "./utils/templateStorage";
 import { useEditorSetup } from "./hooks/useEditorSetup";
 import "./App.css";
 import { MDPreview } from "./components/MDPreview";
-import TemplateBuilder from "./components/TemplateBuilder";
-import TemplateSelector from "./components/TemplateSelector";
-import NewReportModal from "./components/NewReportModal";
-import ConfirmModal from "./components/ConfirmModal";
 import { CenterMenu } from "./components/CenterMenu";
-import ReportsList from "./components/ReportsList";
 import { TemplateProvider, useTemplate } from "./contexts/TemplateContext";
 import { ReportProvider, useReport } from "./contexts/ReportContext";
 import { CustomElementType } from "./assets/editorTypes";
@@ -27,15 +22,16 @@ import {
   getStoredReports,
 } from "./utils/templateStorage";
 import { toast } from "react-hot-toast";
+import UnifiedListModal from "./components/UnifiedListModal";
+import UnifiedCreateModal from "./components/UnifiedCreateModal";
+import ConfirmModal from "./components/ConfirmModal";
 
 function AppContent() {
   const { editor, renderElement, renderLeaf, handleKeyDown } = useEditorSetup();
   const { activeTemplate, setActiveTemplate, refreshTemplate } = useTemplate();
   const { activeReport, setActiveReport, refreshReports } = useReport();
-  const [isBuilderOpen, setIsBuilderOpen] = useState(false);
-  const [isTemplateSelectorOpen, setIsTemplateSelectorOpen] = useState(false);
-  const [isReportsOpen, setIsReportsOpen] = useState(false);
-  const [isNewReportOpen, setIsNewReportOpen] = useState(false);
+  const [isUnifiedListOpen, setIsUnifiedListOpen] = useState(false);
+  const [isUnifiedCreateOpen, setIsUnifiedCreateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -69,21 +65,18 @@ function AppContent() {
     setDisplayTitle(newTitle);
   };
 
-  const handleOpenBuilder = (template?: Template) => {
+  const handleOpenCreate = (template?: Template) => {
     setEditingTemplate(template || null);
-    setIsBuilderOpen(true);
+    setIsUnifiedCreateOpen(true);
   };
 
-  const handleBuilderSave = () => {
-    refreshTemplate();
-    refreshReports();
-    setIsBuilderOpen(false);
-    setEditingTemplate(null);
+  const handleOpenList = () => {
+    setIsUnifiedListOpen(true);
   };
 
-  const handleOpenReports = () => setIsReportsOpen(true);
-
-  const handleOpenNewReport = () => setIsNewReportOpen(true);
+  const handleOpenNewReport = () => {
+    handleOpenCreate();
+  };
 
   const handleDeleteReport = () => {
     if (activeReport) {
@@ -145,10 +138,10 @@ function AppContent() {
   return (
     <div className="relative flex bg-[#dbdbdb] dark:bg-gray-800 h-svh max-h-svh overflow-hidden">
       <CenterMenu
-        onOpenBuilder={handleOpenBuilder}
-        onOpenSelector={() => setIsTemplateSelectorOpen(true)}
+        onOpenBuilder={handleOpenCreate}
+        onOpenSelector={handleOpenList}
         onTogglePreview={onTogglePreview}
-        onOpenReports={handleOpenReports}
+        onOpenReports={handleOpenList}
         onOpenNewReport={handleOpenNewReport}
       />
 
@@ -265,34 +258,25 @@ function AppContent() {
         )}
       </div>
 
-      {/* Template Builder Modal */}
-      <TemplateBuilder
-        isOpen={isBuilderOpen}
+      <UnifiedListModal
+        isOpen={isUnifiedListOpen}
+        onClose={() => setIsUnifiedListOpen(false)}
+        editor={editor}
+        onOpenBuilder={handleOpenCreate}
+      />
+
+      <UnifiedCreateModal
+        isOpen={isUnifiedCreateOpen}
         onClose={() => {
-          setIsBuilderOpen(false);
+          setIsUnifiedCreateOpen(false);
           setEditingTemplate(null);
         }}
-        onSave={handleBuilderSave}
+        editor={editor}
         template={editingTemplate}
       />
-      <TemplateSelector
-        isOpen={isTemplateSelectorOpen}
-        onClose={() => setIsTemplateSelectorOpen(false)}
-        onOpenBuilder={handleOpenBuilder}
-        onTogglePreview={onTogglePreview}
-        showButton={false}
-      />
+
       <Toaster position="bottom-right" />
-      <ReportsList
-        isOpen={isReportsOpen}
-        onClose={() => setIsReportsOpen(false)}
-        editor={editor}
-      />
-      <NewReportModal
-        isOpen={isNewReportOpen}
-        onClose={() => setIsNewReportOpen(false)}
-        editor={editor}
-      />
+
       <ConfirmModal
         isOpen={isDeleteConfirmOpen}
         onClose={() => setIsDeleteConfirmOpen(false)}

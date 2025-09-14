@@ -6,7 +6,10 @@ import {
   ReactNode,
 } from "react";
 import { Report } from "../types/report";
-import { getStoredReports, setActiveReport } from "../utils/templateStorage";
+import {
+  getStoredReports,
+  setActiveReport as setStoredActiveReport,
+} from "../utils/templateStorage";
 
 interface ReportContextType {
   activeReport: Report | null;
@@ -29,7 +32,7 @@ export function ReportProvider({ children }: { children: ReactNode }) {
     setActiveReportState(
       getStoredReports().reports.find((r) => r.id === reportId) || null
     );
-    setActiveReport(reportId);
+    setStoredActiveReport(reportId);
   };
 
   const refreshReports = () => {

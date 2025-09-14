@@ -80,14 +80,6 @@ export function CenterMenu({
             <Play color="white" size={20} />
           </motion.button>
 
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleBuilder}
-            className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
-            title="New Template"
-          >
-            <Plus color="white" size={20} />
-          </motion.button>
           {onSaveReport && (
             <motion.button
               whileTap={{ scale: 0.95 }}

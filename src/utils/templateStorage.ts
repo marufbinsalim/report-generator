@@ -74,12 +74,16 @@ export function saveTemplate(template: Template): void {
 }
 
 export function deleteTemplate(templateId: string): void {
+  if (templateId === "default") {
+    console.error("Cannot delete the default template");
+    return;
+  }
   const storage = getStoredTemplates();
   storage.templates = storage.templates.filter((t) => t.id !== templateId);
 
   // If deleting active template, switch to default
   if (storage.activeTemplateId === templateId) {
-    storage.activeTemplateId = storage.templates[0]?.id || null;
+    storage.activeTemplateId = "default";
   }
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(storage));
