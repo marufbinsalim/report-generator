@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Slate, Editable } from "slate-react";
 import { Toaster } from "react-hot-toast";
 import { FileText, Undo, Redo, Clock, Trash2 } from "lucide-react";
@@ -36,6 +36,12 @@ function AppContent() {
     "idle"
   );
   const [displayTitle, setDisplayTitle] = useState<string>("");
+  const displayTitleRef = useRef("");
+
+  useEffect(() => {
+    displayTitleRef.current = displayTitle;
+  }, [displayTitle]);
+
   const onTogglePreview = () => setIsPreviewOpen((prev) => !prev);
 
   // Update display title when active report changes
@@ -96,34 +102,51 @@ function AppContent() {
     setIsDeleteConfirmOpen(false);
   };
 
-  // Unified auto-save logic with debounce for title and content
+  const triggerSave = useCallback(() => {
+    if (!activeReport) return;
+
+    if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    setSaveStatus("saving");
+
+    saveTimeoutRef.current = setTimeout(() => {
+      const currentTitle =
+        displayTitleRef.current.trim() || generateDefaultTitle(activeTemplate);
+      const updatedReport: Report = {
+        ...activeReport,
+        title: currentTitle,
+        content: JSON.stringify(editor.children),
+        updatedAt: new Date(),
+      };
+      saveReport(updatedReport);
+      toast.success("Report auto-saved");
+      setSaveStatus("saved");
+      setTimeout(() => setSaveStatus("idle"), 2000);
+    }, 1000);
+  }, [activeReport, activeTemplate]);
+
   useEffect(() => {
-    if (activeReport) {
-      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
-      setSaveStatus("saving");
+    triggerSave();
+  }, [displayTitle, triggerSave]);
 
-      const timeout = setTimeout(() => {
-        const currentTitle =
-          displayTitle.trim() || generateDefaultTitle(activeTemplate);
-        const updatedReport: Report = {
-          ...activeReport,
-          title: currentTitle,
-          content: JSON.stringify(editor.children),
-          updatedAt: new Date(),
-        };
-        saveReport(updatedReport);
-        toast.success("Report auto-saved");
-        setSaveStatus("saved");
-        setTimeout(() => setSaveStatus("idle"), 2000);
-      }, 1000); // 1 second debounce
+  useEffect(() => {
+    const handleChange = () => {
+      triggerSave();
+    };
 
-      saveTimeoutRef.current = timeout;
-    }
+    editor.onChange = handleChange;
 
     return () => {
-      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+      editor.onChange = () => {};
     };
-  }, [editor.children, displayTitle, activeReport, activeTemplate]);
+  }, [editor, triggerSave]);
+
+  useEffect(() => {
+    return () => {
+      if (saveTimeoutRef.current) {
+        clearTimeout(saveTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const initialValue = activeReport
     ? getInitialValue(activeTemplate, activeReport.content)
