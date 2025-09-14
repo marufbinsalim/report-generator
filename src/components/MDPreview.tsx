@@ -45,7 +45,26 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
               {
                 parts: [
                   {
-                    text: `${markdown}\n\nRefine this markdown based on the following prompt: ${prompt}`,
+                    text: `
+                        You are a markdown refinement engine. 
+                        Your only task is to take input markdown and refine it based on the user prompt.  
+
+                        ### Rules:
+                        - Always return **only valid markdown**.  
+                        - Never include explanations, metadata, or commentary.  
+                        - If the user’s request is irrelevant to markdown generation, reply with exactly:  
+
+                        \`\`\`md
+                        > Request irrelevant to markdown generation.
+                        \`\`\`
+
+                        ### Input:
+                        Markdown to refine:
+                        ${markdown}
+
+                        Refinement prompt:
+                        ${prompt}
+              `,
                   },
                 ],
               },
