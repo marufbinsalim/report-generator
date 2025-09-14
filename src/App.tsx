@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Slate, Editable } from "slate-react";
 import { Transforms, Editor } from "slate";
 
@@ -6,21 +6,19 @@ import { getInitialValue } from "./data/CONSTANTS/editor_initial_value";
 import { useEditorSetup } from "./hooks/useEditorSetup";
 import "./App.css";
 import { MDPreview } from "./components/MDPreview";
-import { TemplateProvider, useTemplate } from "./contexts/TemplateContext";
-import TemplateSelector from "./components/TemplateSelector";
 import TemplateBuilder from "./components/TemplateBuilder";
-import { Template } from "./types/template";
+import { CenterMenu } from "./components/CenterMenu";
+import { TemplateProvider, useTemplate } from "./contexts/TemplateContext";
 import { CustomElementType } from "./assets/editorTypes";
+import { Template } from "./types/template";
 
 function AppContent() {
   const { editor, renderElement, renderLeaf, handleKeyDown } = useEditorSetup();
-  const { activeTemplate, setActiveTemplate } = useTemplate();
+  const { activeTemplate, setActiveTemplate, refreshTemplate } = useTemplate();
   const [isBuilderOpen, setIsBuilderOpen] = useState(false);
   const [editingTemplate, setEditingTemplate] = useState<Template | null>(null);
-
-  const handleTemplateChange = (template: Template) => {
-    setActiveTemplate(template);
-  };
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
+  const onTogglePreview = () => setIsPreviewOpen((prev) => !prev);
 
   const handleOpenBuilder = (template?: Template) => {
     setEditingTemplate(template || null);
@@ -28,19 +26,23 @@ function AppContent() {
   };
 
   const handleBuilderSave = () => {
-    // Refresh the template context
-    window.location.reload(); // Simple refresh for now
+    refreshTemplate();
+    setIsBuilderOpen(false);
+    setEditingTemplate(null);
+  };
+
+  const handleTemplateChange = (template: Template) => {
+    setActiveTemplate(template);
+    refreshTemplate();
   };
 
   return (
     <div className="relative flex bg-[#dbdbdb] dark:bg-gray-800 h-svh max-h-svh overflow-hidden">
-      {/* Template Controls */}
-      <div className="top-4 right-4 z-10 absolute">
-        <TemplateSelector
-          onTemplateChange={handleTemplateChange}
-          onOpenBuilder={handleOpenBuilder}
-        />
-      </div>
+      <CenterMenu
+        onOpenBuilder={handleOpenBuilder}
+        onTogglePreview={onTogglePreview}
+        onTemplateChange={handleTemplateChange}
+      />
 
       {/* Editor */}
       <Slate
@@ -49,7 +51,7 @@ function AppContent() {
         key={activeTemplate?.id || "default"}
       >
         <div className="relative flex flex-col flex-1 py-5 pl-[35px] overflow-y-auto">
-          <MDPreview />
+          <MDPreview isOpen={isPreviewOpen} onToggle={onTogglePreview} />
           <Editable
             className="flex-1 outline-none w-[calc(100%-20px)] grow"
             renderElement={renderElement}
@@ -62,7 +64,10 @@ function AppContent() {
       {/* Template Builder Modal */}
       <TemplateBuilder
         isOpen={isBuilderOpen}
-        onClose={() => setIsBuilderOpen(false)}
+        onClose={() => {
+          setIsBuilderOpen(false);
+          setEditingTemplate(null);
+        }}
         onSave={handleBuilderSave}
         template={editingTemplate}
       />
