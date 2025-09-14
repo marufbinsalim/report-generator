@@ -9,9 +9,9 @@ import {
   getActiveTemplate,
 } from "../utils/templateStorage";
 import { toast } from "react-hot-toast";
+import ConfirmModal from "./ConfirmModal";
 
 interface TemplateSelectorProps {
-  onTemplateChange: (template: Template) => void;
   onOpenBuilder: (template?: Template) => void;
   onTogglePreview?: () => void;
   showButton?: boolean;
@@ -20,7 +20,6 @@ interface TemplateSelectorProps {
 }
 
 export default function TemplateSelector({
-  onTemplateChange,
   onOpenBuilder,
   onTogglePreview,
   showButton = true,
@@ -28,13 +27,12 @@ export default function TemplateSelector({
   onClose,
 }: TemplateSelectorProps) {
   const [templates, setTemplates] = useState<Template[]>([]);
-  const [activeTemplate, setActiveTemplateState] = useState<Template | null>(
-    null
-  );
   const [internalIsModalOpen, setInternalIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<"templates" | "preview">(
     "templates"
   );
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [deletingTemplate, setDeletingTemplate] = useState<string | null>(null);
 
   const isControlled = isOpen !== undefined;
   const effectiveIsOpen = isOpen !== undefined ? isOpen : internalIsModalOpen;
@@ -58,18 +56,6 @@ export default function TemplateSelector({
   const loadTemplates = () => {
     const storage = getStoredTemplates();
     setTemplates(storage.templates);
-    const active = getActiveTemplate();
-    setActiveTemplateState(active);
-    if (active) {
-      onTemplateChange(active);
-    }
-  };
-
-  const handleTemplateSelect = (template: Template) => {
-    setActiveTemplate(template.id);
-    setActiveTemplateState(template);
-    onTemplateChange(template);
-    effectiveClose();
   };
 
   const handleDeleteTemplate = (templateId: string, e: React.MouseEvent) => {
@@ -78,10 +64,18 @@ export default function TemplateSelector({
       toast.error("Cannot delete the last template");
       return;
     }
-    if (confirm("Are you sure you want to delete this template?")) {
-      deleteTemplate(templateId);
+    setDeletingTemplate(templateId);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDeleteTemplate = () => {
+    if (deletingTemplate) {
+      deleteTemplate(deletingTemplate);
       loadTemplates();
+      toast.success("Template deleted");
     }
+    setIsConfirmOpen(false);
+    setDeletingTemplate(null);
   };
 
   const handleEditTemplate = (template: Template, e: React.MouseEvent) => {
@@ -98,7 +92,7 @@ export default function TemplateSelector({
           className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-3 py-2 rounded text-white text-sm"
         >
           <Settings size={16} />
-          {activeTemplate?.name || "Select Template"}
+          Manage Templates
         </button>
       )}
 
@@ -123,7 +117,7 @@ export default function TemplateSelector({
               {/* Header */}
               <div className="flex justify-between items-center p-4 border-gray-200 dark:border-gray-700 border-b">
                 <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-lg">
-                  Template Settings
+                  Template Management
                 </h2>
                 <button
                   onClick={effectiveClose}
@@ -167,12 +161,8 @@ export default function TemplateSelector({
                       {templates.map((template) => (
                         <div
                           key={template.id}
-                          className={`flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer rounded ${
-                            activeTemplate?.id === template.id
-                              ? "bg-blue-50 dark:bg-blue-900 border border-blue-200 dark:border-blue-800"
-                              : "border border-gray-200 dark:border-gray-600"
-                          }`}
-                          onClick={() => handleTemplateSelect(template)}
+                          className="flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 p-3 border border-gray-200 dark:border-gray-600 rounded cursor-pointer"
+                          onClick={() => {}}
                         >
                           <div className="flex-1">
                             <div className="font-medium text-gray-900 dark:text-gray-100">
@@ -259,6 +249,16 @@ export default function TemplateSelector({
           </motion.div>
         )}
       </AnimatePresence>
+
+      <ConfirmModal
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        onConfirm={confirmDeleteTemplate}
+        title="Delete Template"
+        message="Are you sure you want to delete this template? This action cannot be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+      />
     </div>
   );
 }

@@ -239,10 +239,18 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
                               {children}
                             </h3>
                           ),
-                          li: ({ children }) => (
-                            <li className="ml-4 text-gray-800 dark:text-gray-200 list-disc">
+                          ul: ({ children }) => (
+                            <ul className="ml-6 text-gray-800 dark:text-gray-200 list-disc">
                               {children}
-                            </li>
+                            </ul>
+                          ),
+                          ol: ({ children }) => (
+                            <ol className="ml-6 text-gray-800 dark:text-gray-200 list-decimal">
+                              {children}
+                            </ol>
+                          ),
+                          li: ({ children }) => (
+                            <li className="my-1">{children}</li>
                           ),
                         }}
                       >

@@ -16,7 +16,14 @@ const DEFAULT_INITIAL_VALUE = [
   },
 ] as CustomElementType[];
 
-export function getInitialValue(template: Template | null): Descendant[] {
+export function getInitialValue(
+  template: Template | null,
+  content?: string
+): Descendant[] {
+  if (content) {
+    return JSON.parse(content) as Descendant[];
+  }
+
   if (
     !template ||
     template.taskTypes.length === 0 ||
