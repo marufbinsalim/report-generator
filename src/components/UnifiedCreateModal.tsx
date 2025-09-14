@@ -434,7 +434,7 @@ export default function UnifiedCreateModal({
                         </select>
                         <IconComponent
                           size={20}
-                          className={`text-[var(--color-text-${taskType.color})] rounded`}
+                          className={`text-${taskType.color}-300 rounded`}
                         />
                         <button
                           onClick={() => removeTaskType(index)}

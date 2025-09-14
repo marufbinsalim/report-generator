@@ -110,13 +110,16 @@ export default function Task({
         <select
           value={elementState.status}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className={`unset px-2 py-1 text-xs font-medium rounded text-${currentStatus?.color}-400 cursor-pointer border border-[var(--color-border-default)]`}
+          className={`px-2 py-1 text-xs font-medium rounded cursor-pointer border border-[var(--color-border-default)] text-${
+            activeTemplate.statuses.find((s) => s.name === elementState.status)
+              ?.color
+          }-300`}
         >
           {activeTemplate.statuses.map((status) => (
             <option
               key={status.name}
               value={status.name}
-              className={`unset px-2 py-1 text-xs font-medium rounded text-${status.color}-400 cursor-pointer border border-[var(--color-border-default)]`}
+              className={`px-2 py-1 text-xs font-medium rounded text-white cursor-pointer border border-[var(--color-border-default)]`}
             >
               {status.name.replace("_", " ")}
             </option>
@@ -126,6 +129,11 @@ export default function Task({
 
       {/* Task content */}
       <div className="text-[var(--color-text-gray)] text-sm">{children}</div>
+      <div className="text-red-300" />
+      <div className="text-yellow-300" />
+      <div className="text-purple-300" />
+      <div className="text-green-300" />
+      <div className="text-blue-300" />
     </div>
   );
 }

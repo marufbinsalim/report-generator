@@ -245,7 +245,7 @@ export default function UnifiedListModal({
                 )}
                 <button
                   onClick={handleCreateNewTemplate}
-                  className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] mt-4 px-4 py-2 rounded w-full text-[var(--color-text-default)] text-sm"
+                  className="flex items-center gap-2 bg-[var(--color-bg-primary)] hover:bg-[var(--color-bg-primary)]/[0.8] px-4 py-2 rounded w-full text-[var(--color-text-default)] text-sm"
                 >
                   <Plus size={16} />
                   Create New Template

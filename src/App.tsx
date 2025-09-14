@@ -227,15 +227,19 @@ function AppContent() {
             </div>
           </>
         ) : (
-          <div className="flex flex-1 justify-center items-center bg-[var(--color-bg-gray)] py-5 pl-[35px] overflow-y-auto">
+          <div className="flex flex-1 justify-center items-center py-5 pl-[35px] overflow-y-auto">
             <div className="p-8 max-w-md text-center">
               <FileText className="mx-auto mb-4 w-12 h-12 text-[var(--color-text-muted)]" />
               <h2 className="mb-2 font-bold text-[var(--color-text-default)] text-2xl">
-                No Active Report
+                No Active Report!
               </h2>
               <p className="mb-8 text-[var(--color-text-gray)]">
-                It looks like you haven't created any reports yet. Start by
-                creating a new report using one of your templates.
+                You haven't selected a report to edit. Create a new Task report
+                by clicking the button below.
+                <br />
+                <span className="font-semibold">Or</span>
+                <br />
+                Select an existing report from the list to edit (if available).
               </p>
               <button
                 onClick={handleOpenNewReport}
