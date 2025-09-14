@@ -7,6 +7,11 @@ export const notionColors = {
     muted: "#9B9B9B",
     error: "#A27763",
     success: "#CB7B37", // Approximate green with orange
+    blue: "#3B82F6",
+    green: "#10B981",
+    red: "#EF4444",
+    purple: "#8B5CF6",
+    yellow: "#F59E0B",
     border: "#252525",
     hover: "#D4D4D4",
   },
@@ -18,6 +23,11 @@ export const notionColors = {
     muted: "#252525",
     error: "#2E2724",
     success: "#36291F",
+    blue: "#1E40AF",
+    green: "#047857",
+    red: "#B91C1C",
+    purple: "#581C87",
+    yellow: "#B45309",
     hover: "#2E2724", // Darker for hovers
     border: "#252525",
   },

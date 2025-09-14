@@ -64,15 +64,22 @@ const ICON_MAP = {
   Clock: Clock,
 } as const;
 
-const COMMON_TEXT_COLORS = ["default", "primary", "secondary", "gray"] as const;
+const COMMON_TEXT_COLORS = [
+  "blue",
+  "green",
+  "red",
+  "purple",
+  "yellow",
+] as const;
 
-const COMMON_BG_COLORS = ["primary", "secondary", "gray", "default"] as const;
+const COMMON_BG_COLORS = ["blue", "green", "red", "purple", "yellow"] as const;
 
 const COLOR_NAMES = {
-  default: "Default",
-  primary: "Primary",
-  secondary: "Secondary",
-  gray: "Gray",
+  blue: "Blue",
+  green: "Green",
+  red: "Red",
+  purple: "Purple",
+  yellow: "Yellow",
 } as const;
 
 interface UnifiedCreateModalProps {
@@ -143,7 +150,7 @@ export default function UnifiedCreateModal({
   const addTaskType = () => {
     setTaskTypes([
       ...taskTypes,
-      { name: "", icon: "Zap" as AvailableIcon, color: "primary" },
+      { name: "", icon: "Zap" as AvailableIcon, color: "blue" },
     ]);
   };
 
@@ -177,7 +184,7 @@ export default function UnifiedCreateModal({
   };
 
   const addStatus = () => {
-    setStatuses([...statuses, { name: "", color: "primary" }]);
+    setStatuses([...statuses, { name: "", color: "blue" }]);
   };
 
   const updateStatus = (

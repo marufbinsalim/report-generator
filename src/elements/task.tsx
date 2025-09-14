@@ -111,7 +111,7 @@ export default function Task({
           value={elementState.status}
           onChange={(e) => handleStatusChange(e.target.value)}
           className={`px-2 py-1 text-xs font-medium rounded bg-[var(--color-bg-${
-            currentStatus?.color || "gray"
+            currentStatus?.color || "blue"
           })] text-[var(--color-text-default)] cursor-pointer`}
         >
           {activeTemplate.statuses.map((status) => (
