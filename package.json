@@ -16,6 +16,8 @@
     "lucide-react": "^0.476.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "slate": "^0.112.0",
     "slate-dom": "^0.116.0",
     "slate-history": "^0.113.1",

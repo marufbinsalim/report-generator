@@ -18,7 +18,9 @@ export function parseTasksToMarkdown(tasks: Descendant[]): string {
   });
 
   // Header for the report
-  let markdown = `# Development Task Report\n*Generated on: ${formattedDate}*\n\n`;
+  let markdown = `---\n\n`;
+  markdown += `# Development Task Report\n*Generated on: ${formattedDate}*\n\n`;
+  markdown += `---\n\n`;
 
   convertableTasks.forEach((task, index) => {
     // Combine children text
@@ -39,11 +41,11 @@ export function parseTasksToMarkdown(tasks: Descendant[]): string {
       .join("\n");
 
     // Status and type badges
-    const statusBadge = `\n**Status:** \`${task.status.replace("_", " ")}\``;
-    const typeBadge = `\n**Type:** \`${task.taskType.replace("_", " ")}\``;
+    const typeBadge = `**Task Type:** \`${task.taskType.replace("_", " ")}\``;
+    const statusBadge = `**Task Status:** \`${task.status.replace("_", " ")}\``;
 
     // Combine everything for this task
-    markdown += `${title}\n${statusBadge} | ${typeBadge}\n\n`;
+    markdown += `${title}\n${typeBadge}, ${statusBadge}\n\n`;
     if (description) markdown += `${description}\n\n`;
 
     // Divider between tasks, except after last one

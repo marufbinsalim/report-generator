@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Plus, Eye, Settings, Upload, HelpCircle } from "lucide-react";
+import {
+  Plus,
+  Eye,
+  Settings,
+  Upload,
+  HelpCircle,
+  Copy,
+  List,
+  Play,
+} from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import TemplateSelector from "./TemplateSelector";
 import { Template } from "../types/template";
@@ -43,11 +52,19 @@ export function CenterMenu({
         >
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={handleBuilder}
+            onClick={dummyAction}
             className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
-            title="Template Builder (New)"
+            title="Help"
           >
-            <Plus size={20} />
+            <HelpCircle size={20} color="white" />
+          </motion.button>
+          <motion.button
+            whileTap={{ scale: 0.95 }}
+            onClick={handleSettings}
+            className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
+            title="Template List"
+          >
+            <List color="white" size={20} />
           </motion.button>
           <motion.button
             whileTap={{ scale: 0.95 }}
@@ -55,31 +72,16 @@ export function CenterMenu({
             className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
             title="Markdown Preview"
           >
-            <Eye size={20} />
+            <Play color="white" size={20} />
           </motion.button>
+
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={handleSettings}
+            onClick={handleBuilder}
             className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
-            title="Template Settings"
+            title="Template Builder (New)"
           >
-            <Settings size={20} />
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={dummyAction}
-            className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
-            title="Export"
-          >
-            <Upload size={20} />
-          </motion.button>
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={dummyAction}
-            className="flex justify-center items-center hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded"
-            title="Help"
-          >
-            <HelpCircle size={20} />
+            <Plus color="white" size={20} />
           </motion.button>
         </motion.div>
       </div>

@@ -2,6 +2,8 @@ import { useSlate } from "slate-react";
 import { parseTasksToMarkdown } from "../utils/editor/parser";
 import { motion, AnimatePresence } from "framer-motion";
 import { Copy, X } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface MDPreviewProps {
   isOpen: boolean;
@@ -51,10 +53,34 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
             </div>
 
             {/* Markdown Content */}
-            <div className="flex-1 overflow-auto">
-              <pre className="text-gray-900 dark:text-gray-100 whitespace-pre-wrap">
+            <div className="flex-1 dark:prose-invert p-4 max-w-none overflow-auto text-white whitespace-pre-wrap prose prose-sm">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  h1: ({ children }) => (
+                    <h1 className="font-bold text-gray-900 dark:text-white text-3xl">
+                      {children}
+                    </h1>
+                  ),
+                  h2: ({ children }) => (
+                    <h2 className="font-semibold text-gray-900 dark:text-white text-2xl">
+                      {children}
+                    </h2>
+                  ),
+                  h3: ({ children }) => (
+                    <h3 className="font-semibold text-gray-900 dark:text-white text-xl">
+                      {children}
+                    </h3>
+                  ),
+                  li: ({ children }) => (
+                    <li className="ml-4 text-gray-800 dark:text-gray-200 list-disc">
+                      {children}
+                    </li>
+                  ),
+                }}
+              >
                 {markdown}
-              </pre>
+              </ReactMarkdown>
             </div>
           </motion.div>
         </motion.div>
