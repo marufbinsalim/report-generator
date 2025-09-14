@@ -322,10 +322,6 @@ export default function TemplateBuilder({
                           </option>
                         ))}
                       </select>
-                      <IconComponent
-                        size={20}
-                        className="text-gray-700 dark:text-gray-200"
-                      />
                     </div>
                     <div className="flex items-center gap-2">
                       <select
@@ -350,8 +346,9 @@ export default function TemplateBuilder({
                           );
                         })}
                       </select>
-                      <span
-                        className={`w-4 h-4 rounded-full block border border-gray-300 ${taskType.color}`}
+                      <IconComponent
+                        size={20}
+                        className={`${taskType.color}  rounded`}
                       />
                     </div>
                     <button
