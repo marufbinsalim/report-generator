@@ -1,9 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Slate, Editable } from "slate-react";
-import { Transforms } from "slate";
 import { Toaster } from "react-hot-toast";
 import { FileText, Undo, Redo, Clock, Trash2 } from "lucide-react";
-
 import { getInitialValue } from "./data/CONSTANTS/editor_initial_value";
 import { deleteReport } from "./utils/templateStorage";
 import { useEditorSetup } from "./hooks/useEditorSetup";
@@ -12,10 +10,8 @@ import { MDPreview } from "./components/MDPreview";
 import { CenterMenu } from "./components/CenterMenu";
 import { TemplateProvider, useTemplate } from "./contexts/TemplateContext";
 import { ReportProvider, useReport } from "./contexts/ReportContext";
-import { CustomElementType } from "./assets/editorTypes";
 import { Template } from "./types/template";
 import { Report } from "./types/report";
-import { Editor } from "slate";
 import {
   saveReport,
   getStoredTemplates,
@@ -28,8 +24,8 @@ import ConfirmModal from "./components/ConfirmModal";
 
 function AppContent() {
   const { editor, renderElement, renderLeaf, handleKeyDown } = useEditorSetup();
-  const { activeTemplate, setActiveTemplate, refreshTemplate } = useTemplate();
-  const { activeReport, setActiveReport, refreshReports } = useReport();
+  const { activeTemplate, refreshTemplate } = useTemplate();
+  const { activeReport, refreshReports } = useReport();
   const [isUnifiedListOpen, setIsUnifiedListOpen] = useState(false);
   const [isUnifiedCreateOpen, setIsUnifiedCreateOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);

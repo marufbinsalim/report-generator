@@ -22,7 +22,6 @@ import {
   TaskTypeDefinition,
   StatusDefinition,
 } from "../types/template";
-import { Report } from "../types/report";
 import { CustomElementType } from "../assets/editorTypes";
 import {
   getStoredTemplates,
