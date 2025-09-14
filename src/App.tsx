@@ -129,18 +129,6 @@ function AppContent() {
   }, [displayTitle, triggerSave]);
 
   useEffect(() => {
-    const handleChange = () => {
-      triggerSave();
-    };
-
-    editor.onChange = handleChange;
-
-    return () => {
-      editor.onChange = () => {};
-    };
-  }, [editor, triggerSave]);
-
-  useEffect(() => {
     return () => {
       if (saveTimeoutRef.current) {
         clearTimeout(saveTimeoutRef.current);
@@ -238,6 +226,9 @@ function AppContent() {
                 editor={editor}
                 initialValue={initialValue}
                 key={editorKey}
+                onChange={() => {
+                  triggerSave();
+                }}
               >
                 <MDPreview isOpen={isPreviewOpen} onToggle={onTogglePreview} />
                 <Editable
