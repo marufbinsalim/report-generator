@@ -73,15 +73,17 @@ export default function Task({
   const currentTaskType = activeTemplate.taskTypes.find(
     (t) => t.name === elementState.taskType
   );
-  const currentStatus = activeTemplate.statuses.find(
-    (s) => s.name === elementState.status
-  );
 
   return (
     <div
       {...attributes}
       className="flex flex-col gap-2 bg-[var(--color-bg-default)] shadow-sm mb-2 p-3 border border-[var(--color-border-default)] rounded-md w-full"
     >
+      <span className="fixed m-0 p-0 w-0 h-0 text-red-300" />
+      <span className="fixed m-0 p-0 w-0 h-0 text-yellow-300" />
+      <span className="fixed m-0 p-0 w-0 h-0 text-purple-300" />
+      <span className="fixed m-0 p-0 w-0 h-0 text-green-300" />
+      <span className="fixed m-0 p-0 w-0 h-0 text-blue-300" />
       {/* Header: TaskType + Status */}
       <div
         className="flex justify-between items-center select-none"
@@ -102,7 +104,7 @@ export default function Task({
           </select>
           {currentTaskType &&
             React.createElement(getIconComponent(currentTaskType.icon), {
-              className: `w-4 h-4 ${currentTaskType.color}`,
+              className: `w-4 h-4 text-${currentTaskType.color}-300`,
             })}
         </div>
 
@@ -129,11 +131,6 @@ export default function Task({
 
       {/* Task content */}
       <div className="text-[var(--color-text-gray)] text-sm">{children}</div>
-      <div className="text-red-300" />
-      <div className="text-yellow-300" />
-      <div className="text-purple-300" />
-      <div className="text-green-300" />
-      <div className="text-blue-300" />
     </div>
   );
 }
