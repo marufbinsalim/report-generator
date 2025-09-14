@@ -7,24 +7,47 @@ const STORAGE_KEY = "report-generator-templates";
 
 const DEFAULT_TEMPLATE: Template = {
   id: "default",
-  name: "Default Template",
-  description: "Standard development task template",
+  name: "Project",
+  description: "Task report template for a SWD Project",
   taskTypes: [
-    { name: "FEATURE", icon: "Zap", color: "blue" },
-    { name: "DESIGN", icon: "Pencil", color: "purple" },
-    { name: "BUG_FIX", icon: "AlertCircle", color: "red" },
-    { name: "REFACTOR", icon: "Zap", color: "yellow" },
-    { name: "TEST", icon: "CheckCircle", color: "green" },
-    { name: "DOCUMENTATION", icon: "Pencil", color: "blue" },
-    { name: "RESEARCH", icon: "Zap", color: "purple" },
-    { name: "MAINTENANCE", icon: "Zap", color: "yellow" },
-    { name: "DEPLOYMENT", icon: "Zap", color: "green" },
+    {
+      name: "Bug Fix",
+      icon: "Bug",
+      color: "red",
+    },
+    {
+      name: "New Feature",
+      icon: "Rocket",
+      color: "green",
+    },
+    {
+      name: "Documentation",
+      icon: "FileText",
+      color: "yellow",
+    },
+    {
+      name: "R & D",
+      icon: "Search",
+      color: "purple",
+    },
   ],
   statuses: [
-    { name: "TODO", color: "blue" },
-    { name: "IN_PROGRESS", color: "yellow" },
-    { name: "UNDER_REVIEW", color: "purple" },
-    { name: "DONE", color: "green" },
+    {
+      name: "To Do",
+      color: "red",
+    },
+    {
+      name: "OnGoing",
+      color: "yellow",
+    },
+    {
+      name: "Completed",
+      color: "green",
+    },
+    {
+      name: "Under Testing & QA",
+      color: "blue",
+    },
   ],
   createdAt: new Date(),
   updatedAt: new Date(),
