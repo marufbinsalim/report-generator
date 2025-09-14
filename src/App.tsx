@@ -118,7 +118,6 @@ function AppContent() {
         updatedAt: new Date(),
       };
       saveReport(updatedReport);
-      toast.success("Report auto-saved");
       setSaveStatus("saved");
       setTimeout(() => setSaveStatus("idle"), 2000);
     }, 1000);
@@ -135,6 +134,56 @@ function AppContent() {
       }
     };
   }, []);
+
+  // Global Keyboard Shortcuts
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const isCmd = e.metaKey || e.ctrlKey;
+
+      // Esc to close modals
+      if (e.key === "Escape") {
+        setIsUnifiedListOpen(false);
+        setIsUnifiedCreateOpen(false);
+        setIsDeleteConfirmOpen(false);
+        setIsPreviewOpen(false); // Optional: close preview too
+        return;
+      }
+
+      // Global shortcuts (prevent default to avoid browser actions)
+      if (isCmd) {
+        switch (e.key) {
+          case "s":
+            e.preventDefault();
+            if (activeReport) {
+              triggerSave();
+              toast.success("Saving report...");
+            }
+            break;
+          case "p":
+            e.preventDefault();
+            onTogglePreview();
+            break;
+          case "m":
+            e.preventDefault();
+            handleOpenNewReport();
+            break;
+          case "l":
+            e.preventDefault();
+            handleOpenList();
+            break;
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [
+    activeReport,
+    triggerSave,
+    onTogglePreview,
+    handleOpenNewReport,
+    handleOpenList,
+  ]);
 
   const initialValue = activeReport
     ? getInitialValue(activeTemplate, activeReport.content)

@@ -1,7 +1,8 @@
 import { Plus, HelpCircle, Play, Save, List } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { Template } from "../types/template";
-import { toast } from "react-hot-toast";
+import HelpModal from "./HelpModal";
 
 interface CenterMenuProps {
   onOpenBuilder: (template?: Template) => void;
@@ -18,12 +19,10 @@ export function CenterMenu({
   onOpenReports,
   onOpenNewReport,
 }: CenterMenuProps) {
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+
   const handlePreview = () => {
     onTogglePreview();
-  };
-
-  const dummyAction = () => {
-    toast("This is a dummy action");
   };
 
   return (
@@ -77,7 +76,7 @@ export function CenterMenu({
 
           <motion.button
             whileTap={{ scale: 0.95 }}
-            onClick={dummyAction}
+            onClick={() => setIsHelpOpen(true)}
             className="flex justify-center items-center hover:bg-[var(--color-bg-gray)] p-2 rounded"
             title="Help"
           >
@@ -88,6 +87,8 @@ export function CenterMenu({
           </motion.button>
         </motion.div>
       </div>
+
+      <HelpModal isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
     </>
   );
 }
