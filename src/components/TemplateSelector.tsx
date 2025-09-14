@@ -8,6 +8,7 @@ import {
   deleteTemplate,
   getActiveTemplate,
 } from "../utils/templateStorage";
+import { toast } from "react-hot-toast";
 
 interface TemplateSelectorProps {
   onTemplateChange: (template: Template) => void;
@@ -74,7 +75,7 @@ export default function TemplateSelector({
   const handleDeleteTemplate = (templateId: string, e: React.MouseEvent) => {
     e.stopPropagation();
     if (templates.length <= 1) {
-      alert("Cannot delete the last template");
+      toast.error("Cannot delete the last template");
       return;
     }
     if (confirm("Are you sure you want to delete this template?")) {

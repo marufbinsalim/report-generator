@@ -5,6 +5,7 @@ import { Copy, X, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 interface MDPreviewProps {
   isOpen: boolean;
@@ -26,7 +27,7 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
     try {
       const apiKey = import.meta.env.VITE_GEMINI_KEY;
       if (!apiKey) {
-        alert(
+        toast.error(
           "Gemini API key not found. Please check your environment variables."
         );
         return;
@@ -64,7 +65,7 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
       setRefinedMarkdown(generatedText);
     } catch (error) {
       console.error("Error refining markdown:", error);
-      alert("Failed to refine markdown. Please try again.");
+      toast.error("Failed to refine markdown. Please try again.");
       setRefinedMarkdown("");
     } finally {
       setIsRefining(false);
@@ -75,10 +76,10 @@ function MDPreview({ isOpen, onToggle }: MDPreviewProps) {
     navigator.clipboard
       .writeText(text)
       .then(() => {
-        alert("Copied to clipboard!");
+        toast.success("Copied to clipboard!");
       })
       .catch(() => {
-        alert("Failed to copy to clipboard.");
+        toast.error("Failed to copy to clipboard.");
       });
   };
 

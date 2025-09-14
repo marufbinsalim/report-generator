@@ -12,6 +12,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import TemplateSelector from "./TemplateSelector";
 import { Template } from "../types/template";
+import { toast } from "react-hot-toast";
 
 interface CenterMenuProps {
   onOpenBuilder: (template?: Template) => void;
@@ -39,7 +40,7 @@ export function CenterMenu({
   };
 
   const dummyAction = () => {
-    alert("This is a dummy action");
+    toast("This is a dummy action");
   };
 
   return (

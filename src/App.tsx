@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Slate, Editable } from "slate-react";
 import { Transforms, Editor } from "slate";
+import { Toaster } from "react-hot-toast";
 
 import { getInitialValue } from "./data/CONSTANTS/editor_initial_value";
 import { useEditorSetup } from "./hooks/useEditorSetup";
@@ -71,6 +72,7 @@ function AppContent() {
         onSave={handleBuilderSave}
         template={editingTemplate}
       />
+      <Toaster position="bottom-right" />
     </div>
   );
 }
